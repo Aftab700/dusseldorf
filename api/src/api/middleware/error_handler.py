@@ -1,0 +1,38 @@
+import logging
+from typing import Union
+
+from fastapi import Request, Response
+from fastapi.responses import JSONResponse
+
+logger = logging.getLogger(__name__)
+
+
+async def error_handler_middleware(
+    request: Request, call_next
+) -> Union[Response, JSONResponse]:
+    """Global error handling middleware"""
+    try:
+        return await call_next(request)
+    except Exception as e:
+        # Log the full error with traceback
+        logger.error(
+            f"Unhandled error processing request: {request.url}", exc_info=True
+        )
+
+        # Prepare error response
+        error_detail = {
+            "message": str(e),
+            "type": type(e).__name__,
+        }
+
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": {
+                    "message": "An internal error has occurred.",
+                    "type": "InternalServerError",
+                },
+                "path": str(request.url),
+            },
+        )

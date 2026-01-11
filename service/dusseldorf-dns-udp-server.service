@@ -1,0 +1,25 @@
+[Unit]
+Description=Dusseldorf DNS Server - UDP
+After=network.target mongod.service
+
+[Service]
+# /etc/systemd/system/dusseldorf-dns-udp-server.service
+
+User=root
+Group=root
+
+# Path to your project's root directory
+WorkingDirectory=/root/dusseldorf/listener.dns/src
+
+# Path to the .env file
+EnvironmentFile=/root/dusseldorf/.env
+
+Environment="LSTNER_DNS_UDP=true"
+
+# Command to start the service, using the virtual environment's python
+ExecStart=/root/dusseldorf/venv/bin/python run.py
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

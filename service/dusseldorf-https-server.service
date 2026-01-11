@@ -1,0 +1,26 @@
+[Unit]
+Description=Dusseldorf HTTPS Server
+After=network.target mongod.service
+
+[Service]
+# /etc/systemd/system/dusseldorf-https-server.service
+
+User=root
+Group=root
+
+# Path to your project's root directory
+WorkingDirectory=/root/dusseldorf/listener.http/src
+
+# Path to the .env file
+EnvironmentFile=/root/dusseldorf/.env
+
+Environment="LSTNER_HTTP_PORT=443"
+Environment="LSTNER_HTTP_TLS=1"
+
+# Command to start the service, using the virtual environment's python
+ExecStart=/root/dusseldorf/venv/bin/python run.py
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

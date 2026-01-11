@@ -1,0 +1,23 @@
+[Unit]
+Description=Dusseldorf SMTP Server
+After=network.target mongod.service
+
+[Service]
+# /etc/systemd/system/dusseldorf-smtp-server.service
+
+User=root
+Group=root
+
+# Path to your project's root directory
+WorkingDirectory=/root/dusseldorf/listener.smtp/
+
+# Path to the .env file
+EnvironmentFile=/root/dusseldorf/.env
+
+# Command to start the service, using the virtual environment's python
+ExecStart=/root/dusseldorf/venv/bin/python run.py
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
