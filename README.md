@@ -45,20 +45,11 @@ bash build.sh
 cd ..
 ```
 
-Installing api requirements:
+Installing requirements:
 ```sh
-pip install -r api/src/api/requirements.txt
+pip install -r requirements.txt --only-binary :all:
 ```
 
-Installing dns listener requirements
-```sh
-pip install -r listener.dns/src/requirements.txt
-```
-
-Installing http listener requirements
-```sh
-pip install -r listener.http/src/requirements.txt
-```
 
 Install MongoDB:
 ```sh
@@ -81,7 +72,12 @@ mongosh < env/mongo-scripts/init.js
 
 Setup the admin user & password using [api/src/api/manage_users.py](api/src/api/manage_users.py) file. Use `python api/src/api/manage_users.py -h` for help.
 ```sh
-python api/src/api/manage_users.py -u admin -p your_super_secret_passwd
+python api/src/api/manage_users.py upsert -u admin -p your_super_secret_passwd -r admin owner -n Admin
+```
+
+Setup domain and ip:
+```sh
+python env/mongo-scripts/mongo-database.py --domain aftabsama.com --delete --ips 69.53.13.44
 ```
 
 Setting up systemd services:

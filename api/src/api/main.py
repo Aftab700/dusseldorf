@@ -23,10 +23,10 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 if os.environ.get("ENVIRONMENT") != "development":
-    if not os.environ.get("API_TLS_CRT_FILE"):
-        raise Exception("API_TLS_CRT_FILE not found in environment variables")
-    if not os.environ.get("API_TLS_KEY_FILE"):
-        raise Exception("API_TLS_KEY_FILE not found in environment variables")
+    if not os.environ.get("DSSLDRF_TLS_CRT_FILE"):
+        raise Exception("DSSLDRF_TLS_CRT_FILE not found in environment variables")
+    if not os.environ.get("DSSLDRF_TLS_KEY_FILE"):
+        raise Exception("DSSLDRF_TLS_KEY_FILE not found in environment variables")
 
 dusseldorf = FastAPI()
 
@@ -74,6 +74,6 @@ else:
         dusseldorf,
         host="0.0.0.0",
         port=int(os.environ.get("API_PORT", 10443)),
-        ssl_keyfile=os.environ.get("API_TLS_KEY_FILE"),
-        ssl_certfile=os.environ.get("API_TLS_CRT_FILE"),
+        ssl_keyfile=os.environ.get("DSSLDRF_TLS_KEY_FILE"),
+        ssl_certfile=os.environ.get("DSSLDRF_TLS_CRT_FILE"),
     )
